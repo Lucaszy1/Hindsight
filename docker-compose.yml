@@ -1,0 +1,27 @@
+services:
+  mongo:
+    image: mongo:7
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+  # One-shot: downloads the dataset subset and loads it into MongoDB.
+  loader:
+    build: .
+    environment:
+      MONGO_URI: mongodb://mongo:27017
+    volumes:
+      - ./data:/app/data
+    depends_on:
+      mongo:
+        condition: service_healthy
+    command: ["python", "-m", "annlab.loader", "-n", "300"]
+
+volumes:
+  mongo_data:
