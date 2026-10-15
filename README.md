@@ -7,7 +7,7 @@ See [docs/HOW_IT_WORKS.md](docs/HOW_IT_WORKS.md) for a plain-language walkthroug
 ## Setup
 
 ```bash
-git clone <this repo> && cd mongo-annotation-lab
+git clone https://github.com/Lucaszy1/Hindsight.git && cd Hindsight
 docker compose up --build        # starts MongoDB 7 and loads 300 items
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
